@@ -1,0 +1,17 @@
+# Bloquear dependencias en cualquier nivel del proyecto
+**/node_modules/
+
+# Bloquear archivos de variables de entorno (claves secretas) en cualquier nivel
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# Bloquear carpetas de compilación/producción del frontend (Vite, React, etc.)
+**/dist/
+**/build/
+
+# Archivos temporales o basura del sistema operativo
+.DS_Store
+Thumbs.db
