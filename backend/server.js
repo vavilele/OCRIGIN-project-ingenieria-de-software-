@@ -13,9 +13,11 @@ app.use((req, res, next) => {
   next();
 });
 
-
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: [
+    'https://ocrigin.onrender.com',
+    'http://localhost:5173'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
