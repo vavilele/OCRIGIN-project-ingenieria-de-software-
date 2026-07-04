@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AuthForm from "./components/AuthForm.jsx";
 
+const API_BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:5000/api'
+  : 'https://ocrigin-backend.onrender.com/api';
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -29,7 +33,6 @@ function App() {
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
-
     if (isAuthenticated) {
       fetchCharacters();
     }
@@ -39,7 +42,8 @@ function App() {
   const fetchCharacters = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/characters', {
+      // 🔄 Reemplazado por API_BASE_URL
+      const res = await fetch(`${API_BASE_URL}/characters`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +70,8 @@ function App() {
     }
     setAiLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/improve-description', {
+      // 🔄 Reemplazado por API_BASE_URL
+      const res = await fetch(`${API_BASE_URL}/improve-description`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,7 +97,8 @@ function App() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:5000/api/characters', {
+      // 🔄 Reemplazado por API_BASE_URL
+      const res = await fetch(`${API_BASE_URL}/characters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +128,8 @@ function App() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/characters/${id}`, {
+      // 🔄 Reemplazado por API_BASE_URL
+      const res = await fetch(`${API_BASE_URL}/characters/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}` // Valida que seas el dueño
@@ -297,7 +304,7 @@ function App() {
       borderRadius: '20px',
       padding: '20px',
       border: '1px solid #ffe5ec',
-      boxShadow: '0 6px 15px rgba(255, 182, 193, 0.1)',
+      shadow: '0 6px 15px rgba(255, 182, 193, 0.1)',
       display: 'flex',
       gap: '20px',
       position: 'relative',

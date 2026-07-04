@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+const API_BASE_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:5000/api'
+    : 'https://ocrigin-backend.onrender.com/api';
+
 const AuthForm = ({ onAuthSuccess }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
@@ -16,8 +20,9 @@ const AuthForm = ({ onAuthSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-        const url = `http://localhost:5000${endpoint}`;
+
+        const endpoint = isLogin ? '/auth/login' : '/auth/register';
+        const url = `${API_BASE_URL}${endpoint}`;
 
         const payload = isLogin
             ? { email: formData.email, password: formData.password }
@@ -32,18 +37,18 @@ const AuthForm = ({ onAuthSuccess }) => {
                 body: JSON.stringify(payload)
             });
 
-            // Primero procesamos la respuesta del servidor, sea buena o mala
             const data = await response.json();
 
             if (!response.ok) {
-                // Si el servidor respondió con un error controlado (como el 400 de usuario no encontrado)
+
                 alert(data.error || `Error en el servidor: Código ${response.status}`);
-                return; // Detenemos la ejecución aquí
+                return;
             }
 
-            // Si la respuesta fue exitosa (Código 200)
+
             if (data.success) {
                 if (isLogin) {
+
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('username', data.username);
                     alert(`¡Bienvenido de vuelta, ${data.username}!`);
@@ -56,7 +61,7 @@ const AuthForm = ({ onAuthSuccess }) => {
             }
         } catch (error) {
             console.error('Error real en la petición:', error);
-            alert('No se pudo establecer conexión física con el servidor. Asegúrate de que no esté apagado.');
+            alert('No se pudo establecer conexión física con el servidor. Asegúrate de que el backend en Render esté activo.');
         }
     };
 
