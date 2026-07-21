@@ -130,10 +130,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-/**
- * Endpoint de IA: Optimización Creativa de Redacción de Biografías
- * Incorpora los logs de trazabilidad de 3 fases (Exigencia 4) y manejo del error HTTP 429 (Exigencia 5).
- */
+
 app.post('/api/improve-description', async (req, res) => {
   const { description, fullName } = req.body;
 
@@ -142,14 +139,14 @@ app.post('/api/improve-description', async (req, res) => {
   }
 
   try {
-    // --- [TRACE 1]: Mensaje inicial enviado por el usuario ---
+
     console.log(`\n================================================================================`);
     console.log(`[TRACE 1 - USER PROMPT] Timestamp: ${new Date().toISOString()}`);
     console.log(`--------------------------------------------------------------------------------`);
     console.log(` Target Character: "${fullName || 'Anónimo'}"`);
     console.log(` Raw Description Received: "${description}"`);
 
-    // --- [TRACE 2]: Estructuración del contexto narrativo ---
+
     console.log(`\n[TRACE 2 - CONTEXT STRUCTURED]`);
     console.log(`--------------------------------------------------------------------------------`);
     const systemInstruction =
@@ -161,7 +158,6 @@ app.post('/api/improve-description', async (req, res) => {
 
     const promptConsolidado = `${systemInstruction}\n\nTexto original del usuario: ${description}`;
 
-    // --- [TRACE 3]: Payload consolidado enviado a Google AI Studio ---
     console.log(`\n[TRACE 3 - CONSOLIDATED PROMPT SENT TO GOOGLE AI STUDIO]`);
     console.log(`--------------------------------------------------------------------------------`);
     console.log(` Final Payload sent to Gemini API:\n"""\n${promptConsolidado}\n"""`);
